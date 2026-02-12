@@ -48,7 +48,6 @@ body {
   flex: 1;
   width: 100%;
   padding: 16px;
-  padding-bottom: 80px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -76,9 +75,6 @@ body {
 
 /* INPUT BAR */
 .input-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
   display: flex;
   align-items: center;
