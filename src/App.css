@@ -9,7 +9,6 @@ body,
   padding: 0;
   height: 100%;
   width: 100%;
-  overflow: hidden;
 }
 
 body {
@@ -19,7 +18,7 @@ body {
 /* MAIN PHONE / APP LAYOUT */
 .phone {
   height: 100dvh;
-  width: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   background: #6b4a73;
@@ -96,12 +95,6 @@ body {
   border-radius: 8px;
   resize: none;
 }
-.input-bar textarea {
-  height: 40px;
-  max-height: 40px;
-  overflow-y: auto;
-}
-
 
 /* SEND BUTTON */
 .input-bar button {
