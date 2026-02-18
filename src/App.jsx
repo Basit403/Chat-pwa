@@ -4,8 +4,11 @@ import Header from './component/Header';
 import ChatBody from './component/ChatBody';
 import InputBar from './component/InputBar';
 import BottomNav from './component/BottomNav';
+import Auth from './component/Auth';
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const [messages, setMessages] = useState([
     { text: "Hello", side: "left" },
   ]);
@@ -19,6 +22,12 @@ export default function App() {
     ]);
   };
 
+  // If not logged in → show Auth page
+  if (!isAuthenticated) {
+    return <Auth onLogin={() => setIsAuthenticated(true)} />;
+  }
+
+  // If logged in → show Chat
   return (
     <div className="phone">
       <Header />
