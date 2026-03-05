@@ -24,7 +24,6 @@ body {
   background: #6b4a73;
 }
 
-
 .header {
   height: 56px;
   width: 100%;
@@ -144,7 +143,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #6b4a73;
+  /* background: #6b4a73; */
 }
 
 .auth-card {
@@ -159,7 +158,7 @@ body {
 }
 
 .auth-card h2 {
-  text-align: center;
+  text-align: left;
   margin: 0;
 }
 
@@ -189,4 +188,84 @@ body {
   color: #6b4a73;
   cursor: pointer;
   font-size: 14px;
+}
+p {
+  color: #6b4a73;
+  text-decoration: wavy;
+  font-weight: bold;
+}
+.auth-card .continue {
+  opacity: 50;
+  font-size: smaller;
+  font-weight: 100;
+  align-self: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  background: #f5f5f5;
+}
+
+.form-group input::placeholder {
+  color: #999;
+  font-size: 13px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #6b4a73;
+  background: #fff;
+}
+
+.btn-primary {
+  padding: 12px !important;
+  margin-top: 8px;
+}
+
+.btn-google {
+  padding: 12px !important;
+  background: #6b4a73 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: white !important;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-google i {
+  font-size: 16px;
+}
+
+.divider {
+  text-align: center;
+  color: #999 !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  margin: 4px 0 !important;
+}
+
+.auth-subtitle {
+  color: #666 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  margin: -8px 0 8px 0 !important;
 }

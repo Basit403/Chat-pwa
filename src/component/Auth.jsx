@@ -1,13 +1,15 @@
 import { useState } from "react";
+import axios from "axios"; 
 
 export default function Auth({ onLogin }) {
   const [isLogin, setIsLogin] = useState(true);
-
   const [formData, setFormData] = useState({
-    username: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -16,65 +18,126 @@ export default function Auth({ onLogin }) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    try {
+      let response;
+      if (isLogin) {
+        response = await axios.post("http://localhost:4000/auth/login", {
+          email: formData.email,
+          password: formData.password,
+        });
+      } else {
+        response = await axios.post("http://localhost:4000/auth/register", {
+          firstName: formData.firstname,
+          lastName: formData.lastname,
+          email: formData.email,
+          password: formData.password,
+        });
+      }
+      // Store user data (adjust as needed)
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      onLogin(response.data.user);
+    } catch (err) {
+      setError(err.response?.data?.message || "Authentication failed");
+    }
+  };
 
-    console.log("Form Data:", formData);
-
-    // fake login
-    // Later this will call backend API
-
-    onLogin();
+  const handleGoogleAuth = () => {
+    window.location.href = "http://localhost:4000/auth/google"; // Redirect to Google OAuth
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>{isLogin ? "Login" : "Register"}</h2>
+        <div className="auth-logo">
+          <h1>XORA</h1>
+        </div>
+
+        <h2>{isLogin ? "Welcome Back" : "Join us"}</h2>
+        <p className="auth-subtitle">
+          {isLogin ? "Sign in to continue " : "Create your account"}
+        </p>
 
         <form onSubmit={handleSubmit}>
-          {/* Username only shows on Register */}
           {!isLogin && (
+            <>
+              <div className="form-group">
+                <label>First Name</label>
+                <input
+                  type="text"
+                  name="firstname"
+                  placeholder="First Name"
+                  value={formData.firstname}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  name="lastname"
+                  placeholder="Last Name"
+                  value={formData.lastname}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </>
+          )}
+
+          <div className="form-group">
+            <label>Email</label>
             <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
+              type="email"
+              name="email"
+              placeholder="name@example.com"
+              value={formData.email}
               onChange={handleChange}
               required
             />
-          )}
+          </div>
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="••••••••"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+          {error && <p style={{ color: "red" }}>{error}</p>}
 
-          <button type="submit">
-            {isLogin ? "Login" : "Create Account"}
+          <button type="submit" className="btn-primary">
+            {isLogin ? "Sign In" : "Create Account"}
           </button>
         </form>
 
-        <p
-          className="toggle-text"
-          onClick={() => setIsLogin(!isLogin)}
-        >
-          {isLogin
-            ? "Don't have an account? Register"
-            : "Already have an account? Login"}
+        <p className="divider">OR CONTINUE WITH</p>
+
+        <button className="btn-google" onClick={handleGoogleAuth}>
+          <i className="fab fa-google"></i>
+          Continue with Google
+        </button>
+
+        <p className="toggle-text">
+          {isLogin ? (
+            <>
+              Don't have an account?{" "}
+              <span onClick={() => setIsLogin(false)}>Sign up</span>
+            </>
+          ) : (
+            <>
+              Already have an account?{" "}
+              <span onClick={() => setIsLogin(true)}>Login</span>
+            </>
+          )}
         </p>
       </div>
     </div>
